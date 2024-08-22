@@ -1,0 +1,205 @@
+---
+execute: 
+  echo: false
+  eval: true 
+jupyter: mod_docs 
+format:
+  html: 
+    embed-resources: true
+    css: ./styles.css
+  pdf:
+    css: ./styles.css
+    
+    
+bibliography: bibliography.bib
+csl: ./apa.csl
+---
+
+
+```{python}
+#| label: imports
+import pandas as pd
+import pathlib as pl
+import datetime as dt
+from tabulate import tabulate, tabulate_formats
+from IPython.display import Markdown, display
+```
+
+```{python}
+#| label: details 
+tables_file = pl.Path(r'./Table layout 2024(25).xlsx') # creating a path to the tables document
+
+details = pd.read_excel(tables_file, 'Module Details') # importing the module details table
+
+details = details.set_index(details.columns[0], drop = True) #setting the index of the details table
+
+title = details.iloc[:4,:].T.to_dict('list') #converting it to a dict to make it easier to access
+
+assessment = pd.read_excel(tables_file, 'Assessment Details') #importing the assessment table
+
+calendar = pd.read_excel(tables_file, 'Module Calender') # importing the module calendar
+
+calendar['Date starting'] =  calendar['Date starting'].dt.strftime('%d-%m-%Y') # editing the time stamps in the calendar
+
+penalties = pd.read_excel(tables_file, 'Missed Lab Penalties') # importing the missed assignment penalties.
+```
+
+![](./images/logo.png){fig-align="center"}
+
+# `{python} f"{title['Module Code'][0]} - {title['Module Name'][0]}"` {.titlecent1}
+## `{python} f"{title['Semester'][0]}, {title['Academic Year'][0]} Module Handbook"` {.titlecent2}
+
+```{python}
+#| label: details_table
+Markdown(tabulate(details.iloc[4:,:], colalign=['right', 'left']))
+```
+
+## Module Overview
+
+This module is designed to introduce you to some of the research methods employed in psychological research and the wider social sciences.While we will cover both qualitative and quantitative research techniques, the core of the module will provide a foundation for working with quantitative (numerical) data and hands on experience with many of the methods and tools employed in psychology.
+
+This module will furnish you with the foundational skills you'll need throughout your study of psychology. Using practical examples as well as presentations on the wider concepts, you will gain experience in the work of psychology research, but also in *thinking* like a philosophically literate researcher.
+
+## Learning Outcomes
+
+*Cognitive (Knowledge, Understanding, Application, Analysis, Evaluation, Synthesis)*
+
+  - Demonstrate knowledge of the basic research methodologies in psychology
+  - Evaluate case studies and observational studies in psychology
+  - Understand how to analyse and interpret basic descriptive information
+
+*Affective (Attitudes and Values)*
+
+  - Develop a positive attitude towards the role of research in the development of knowledge
+  - Foster a sense of personal competence in the context of research. 
+
+*Psychomotor (Physical Skills)*
+
+  - Report writing skills
+  - Data collection and survey design skills
+  - Descriptive analysis skills
+
+
+## Teaching and Learning Strategies
+
+`{python} f"{title['Module Code'][0]}"` is a challenging module which requires significant self motivation on the part of students. A number of various teaching tools are employed to empower you to engage with the theoretical and practical elements of the module. 
+
+### Lectures:
+
+Lectures are pre-recorded and will be released on Monday mornings via Brightspace. It is important that you watch the lectures **before** coming to your lab session. There will be quizes at the start of each lab and there will be a little bit more content covered in labs that won't make sense unless you have watched the lectures **before** coming to your lab session. 
+
+### Lab Activities:
+
+Lab activities are *roughly* two-hour activities in which you will be asked to work through exercises that reinforce the lecture content and/or allow you to practice a technique that will be required in in the course work assignments. 
+
+All activities must be completed and submitted on Brightspace by the Friday of week 13 at 17:00 (5:00pm). There will be a 5% penalty for each unsubmitted lab activity up to a maximum of 3 activities at which point you will fail and have to repeat the lab activities in the summer.
+
+### Low Stakes Quizes
+
+
+**Overview:**
+
+Low stakes quizzes make up 10% of the overall module grade. These quizzes are designed to highlight key concepts and their specific definitions covered in the module each week. These quizes are as much a teaching tool as they are an assessment tool so please look on them as a chance to practice *recalling* what you've learned [see @brown2014make].
+
+**Details:**
+
+- **Frequency:** A **SHORT** multiple-choice quiz will be available each week, focusing on the lecture content.
+- **Passing Criteria:** A score of 70% is required to pass each quiz.
+- **Contribution to Grade:** Each passed quiz contributes 1% to your overall grade.
+
+**Flexibility:**
+
+- **Best 10 Quizzes Count:** Although there are 12 weeks in the module, only the 10 highest quiz scores will be counted towards your final grade. This means you can choose the weeks that best reflect your understanding.
+
+- **Support:** If you find a particular week challenging, you can skip that quiz and seek additional support during office hours without it affecting your overall grade (up to 2 times).
+ 
+
+
+## Student hours
+
+ Student hours (formerly called 'Office hours') are available every week with 8 * 15 minute slots available. These can be booked via email. 
+I'm happy to meet on teams or in person, and I'm also happy to meet in small groups (this is better) if you find you have similar questions.I strongly encourage you to sign up at least once a month for a quick check in, I will do my best accomodate you, especially in relation to feedback from assignments.
+
+# Assessment and Grades
+
+Assessment on the module is mainly via coursework, in the form of two written assignments which each make up a percentage of your final grade for the module. The assignment briefs will be made available to you in the ‘Assignments’ section of Brightspace (under the ‘Course Tools’ tab) and will be posted in the main Lesson the week the details are released. 
+
+As stated above there are also the weekly quizes which will contribute to a max of 10% of the grade. 
+
+```{python}
+#| label: assessment_table
+Markdown(tabulate(assessment, headers=assessment.columns, tablefmt="grid", showindex=False))
+```
+
+ - *A note on late submissions and extentions*
+**The Department of Psychology does not offer extensions**; if you miss an assessment deadline, you must submit an M-Form (Mitigating circumstances Form) with documentary evidence supporting your reason. This is considered by a committee at the end of the semester.
+
+Please carefully read Psychology Student handbook which is [located here](https://www.ul.ie/media/38817/download?inline) and in the week 1 folder on Brightspace; especially pages 8 – 9. Please note that these rules apply to all students on the module including those who register late and those from other faculties/disciplines.
+
+## Submission of Assignments
+
+All assignments must be submitted in soft copy (electronic) format via Brightspace. All submissions must be in the form of .docx files unless otherwise specified in the assignment brief.
+There is a 5% penalty for every day up to 5 days that the assignment is late. After 5 days a mark of 0 will be given. Please carefully read Psychology Student handbook which is [located here](https://www.ul.ie/media/38817/download?inline) especially pages 6 - 7.
+
+## PARE Requirements
+
+`{python} f"{title['Module Code'][0]}"` is a associated with a PARE module (Professional Accreditation Related Elements). This means that a certain level of proficiency must be attained in the module, under the course accreditation requirements set out by the Psychological Society of Ireland.
+You must attain a grade of C3 or higher (i.e. ≥45%) in order to pass `{python} f"{title['Module Code'][0]}"`. Grades of D1 and D2 cannot be used as compensatory fail grades for this module; thus the next grade below C3 is F. 
+
+The possible grades and outcomes are outlined below:
+
+![Progress flow depending on grade](./images/Pass-fail flow (Pare UG).png)
+
+## Feedback
+
+Feedback on assignments will be available in three ways.
+Individual written feedback will be provided on an excel document which will be available via the Assignment page on Brightspace . This feedback will take the form of performance on a grading rubric with additional specific comments. In addition, group level feedback on particular strengths and areas of opportunity will be provided via Brightspace before the release of individual grades. 
+Finally, more specified and detailed feedback will be available through student hours (you must sign up).
+
+
+## Attendance policy
+
+Attendance at labs is mandatory to ensure that you have engaged with the material enough to receive an accredited degree. 
+As such, attendace at the lab sessions in E1022b (on the psychology corridor) is obligatory. You will have a lab session on your student timetable and you **must attend the scheduled session**. 
+
+If you are unable to attend the in-person version of the lab for any reason, please contact me as far in advance as possible and I will set up and an online replacement via BigBlueButton (the link will be on Brightspace). 
+
+
+
+All activities must be completed and uploaded to Brightspace before the end of the semester, however we encourage you to upload your activities week-by-week. 
+
+If you are unwell or have mitigating circumstance you can miss *1* lab session entirely as long as you get the activity uploaded by the due date at the end of semester (see the table above). Other missed labs must be covered by an M-form as per the [psychology department policy](
+See the table below for the penalties for missing lab activities the dead line.
+
+```{python}
+#| label: penalties_table
+Markdown(tabulate(penalties, headers=penalties, tablefmt="grid", showindex=False))
+```
+
+{{< pagebreak >}}
+
+## Semester Breakdown
+
+Below is an overview of the topics covered week-by-week. 
+
+```{python}
+#| label: module_calendar
+
+Markdown(tabulate(calendar , headers=calendar,  tablefmt="grid", showindex=False))
+```
+
+## Instructional Materials
+
+All required learning materials that will be available on Brightspace.
+
+However, I strongly recommend that you buy a copy of Discovering Statistics Using IBM SPSS Statistics by Andy Field [-@field2024discovering, any edition will do, although the more recent ones are better].
+Also An Adventure in Statistics: The Reality Enigma which is also by Andy Field [-@field2022reality]. 
+Both of these books are really good and are worth having throughout your degree in psychology (many of your lecturers will still have copies on their desks. 
+
+
+
+
+
+
+:::{.refs}
+:::
